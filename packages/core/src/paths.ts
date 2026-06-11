@@ -85,7 +85,7 @@ export function getVoicePaths(repoRoot = resolveRepoRoot()): VoicePaths {
       "styles",
       "config",
       "vocabularies",
-      "James",
+      "Voice",
       "accept.txt"
     ),
     rejectVocabularyPath: path.join(
@@ -93,7 +93,7 @@ export function getVoicePaths(repoRoot = resolveRepoRoot()): VoicePaths {
       "styles",
       "config",
       "vocabularies",
-      "James",
+      "Voice",
       "reject.txt"
     )
   };

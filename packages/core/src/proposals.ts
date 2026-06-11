@@ -148,7 +148,7 @@ export async function acceptVoiceUpdateProposal(
     ...proposal.changes.rules.map((rule) => ({
       filePath: path.join(
         paths.stylesPath,
-        "James",
+        "Voice",
         safeValeRuleFilename(rule.filename),
       ),
       contents: rule.contents,
@@ -358,7 +358,7 @@ async function writeValeRules(
 ): Promise<void> {
   for (const rule of rules) {
     await writeFile(
-      path.join(stylesPath, "James", safeValeRuleFilename(rule.filename)),
+      path.join(stylesPath, "Voice", safeValeRuleFilename(rule.filename)),
       rule.contents,
       "utf8",
     );

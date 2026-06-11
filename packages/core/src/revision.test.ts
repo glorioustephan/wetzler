@@ -10,10 +10,9 @@ describe("prepareRevision", () => {
       goal: "tighten the prose"
     });
 
-    expect(packet.voiceProfile.name).toBe("James Baker");
+    expect(packet.voiceProfile.name).toBe("Writing Voice");
     expect(packet.vale.summary.alertCount).toBeGreaterThan(0);
     expect(packet.rewriteChecklist.join(" ")).toContain("Preserve factual claims");
     expect(packet.outputInstructions.join(" ")).toContain("ready to paste");
   });
 });
-

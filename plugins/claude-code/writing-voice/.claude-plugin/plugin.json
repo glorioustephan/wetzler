@@ -1,9 +1,9 @@
 {
   "name": "wetzler",
   "version": "0.1.0",
-  "description": "Rewrite Markdown in James's voice using a Vale-backed MCP server.",
+  "description": "Rewrite Markdown with a configurable Vale-backed MCP server.",
   "author": {
-    "name": "James Baker"
+    "name": "Writing Voice Maintainers"
   },
   "license": "UNLICENSED",
   "keywords": ["writing", "voice", "vale", "markdown", "mcp"]

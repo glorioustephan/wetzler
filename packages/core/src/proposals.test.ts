@@ -71,13 +71,13 @@ describe("voice learning proposals", () => {
         "styles",
         "config",
         "vocabularies",
-        "James",
+        "Voice",
         "accept.txt",
       ),
       "utf8",
     );
     const rule = await readFile(
-      path.join(repoRoot, "styles", "James", "LaunchNote.yml"),
+      path.join(repoRoot, "styles", "Voice", "LaunchNote.yml"),
       "utf8",
     );
 
@@ -133,23 +133,23 @@ async function createTempVoiceRepo(): Promise<string> {
   const repoRoot = await mkdtemp(path.join(os.tmpdir(), "wetzler-"));
   await mkdir(path.join(repoRoot, "voice", "samples"), { recursive: true });
   await mkdir(path.join(repoRoot, "voice", "proposals"), { recursive: true });
-  await mkdir(path.join(repoRoot, "styles", "James"), { recursive: true });
+  await mkdir(path.join(repoRoot, "styles", "Voice"), { recursive: true });
   await mkdir(
-    path.join(repoRoot, "styles", "config", "vocabularies", "James"),
+    path.join(repoRoot, "styles", "config", "vocabularies", "Voice"),
     {
       recursive: true,
     },
   );
   await writeFile(
     path.join(repoRoot, ".vale.ini"),
-    "StylesPath = styles\nMinAlertLevel = suggestion\n\n[*.md]\nBasedOnStyles = James\n",
+    "StylesPath = styles\nMinAlertLevel = suggestion\nVocab = Voice\n\n[*.md]\nBasedOnStyles = Voice\n",
     "utf8",
   );
   await writeFile(
     path.join(repoRoot, "voice", "profile.yml"),
     stringify({
       version: 1,
-      name: "James Baker",
+      name: "Writing Voice",
       summary: "Test profile",
       principles: ["Lead with the point."],
       toneBoundaries: ["Warm, not syrupy."],
@@ -165,7 +165,7 @@ async function createTempVoiceRepo(): Promise<string> {
       "styles",
       "config",
       "vocabularies",
-      "James",
+      "Voice",
       "accept.txt",
     ),
     "Codex\n",
@@ -177,7 +177,7 @@ async function createTempVoiceRepo(): Promise<string> {
       "styles",
       "config",
       "vocabularies",
-      "James",
+      "Voice",
       "reject.txt",
     ),
     "utilize\n",

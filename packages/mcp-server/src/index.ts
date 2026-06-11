@@ -167,7 +167,7 @@ export function createWritingVoiceServer(): McpServer {
     async (uri) => {
       const paths = getVoicePaths();
       const ruleFilenames = (
-        await readdir(path.join(paths.stylesPath, "James"))
+        await readdir(path.join(paths.stylesPath, "Voice"))
       )
         .filter((filename) => filename.endsWith(".yml"))
         .sort();
@@ -175,7 +175,7 @@ export function createWritingVoiceServer(): McpServer {
         ruleFilenames.map(async (filename) => ({
           filename,
           contents: await readFile(
-            path.join(paths.stylesPath, "James", filename),
+            path.join(paths.stylesPath, "Voice", filename),
             "utf8",
           ),
         })),
@@ -204,7 +204,7 @@ export function createWritingVoiceServer(): McpServer {
     {
       title: "Rewrite In Voice",
       description:
-        "Prepare instructions for rewriting Markdown in James Baker's voice.",
+        "Prepare instructions for rewriting Markdown with the configured Writing Voice profile.",
       argsSchema: {
         markdown: z.string(),
         path: maybeString,

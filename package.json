@@ -5,10 +5,6 @@
   "type": "module",
   "description": "A Vale-backed, agent-guided writing voice tool for Markdown revision.",
   "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jamesleebaker/wetzler.git"
-  },
   "engines": {
     "node": ">=22.0.0",
     "pnpm": ">=11.0.0"
@@ -23,15 +19,19 @@
     "validate:codex-plugin": "pnpm build && tsx scripts/validate-codex-plugin.ts",
     "smoke:mcpb": "tsx scripts/smoke-mcpb.ts",
     "validate:mcpb": "pnpm build:mcpb && mcpb validate dist/mcpb && pnpm smoke:mcpb",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "wetzler": "node packages/cli/dist/index.js"
   },
   "devDependencies": {
     "@anthropic-ai/mcpb": "2.1.2",
     "@types/node": "25.9.2",
     "esbuild": "0.28.0",
-    "tsx": "4.22.4",
     "tsup": "8.5.1",
+    "tsx": "4.22.4",
     "typescript": "6.0.3",
+    "vitepress": "1.6.4",
     "vitest": "4.1.8"
   },
   "pnpm": {

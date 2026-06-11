@@ -1,0 +1,176 @@
+---
+title: Set Up a Voice
+description: Create, tune, and safely update a Wetzler voice profile with samples, vocabulary, Vale rules, and proposals.
+---
+
+# Set Up a Voice
+
+A Wetzler voice is a small set of plain files. That is the point. You can read it, diff it, review it, and change it without trusting a hidden prompt.
+
+## Voice Files
+
+| File or directory | Purpose |
+| --- | --- |
+| `voice/profile.yml` | The voice contract used in every revision packet. |
+| `voice/samples/` | Markdown samples and metadata copied by `wetzler samples add`. |
+| `voice/proposals/` | Review-gated update proposals created by `wetzler learn propose`. |
+| `styles/Voice/` | Vale rules for patterns the voice should catch. |
+| `styles/config/vocabularies/Voice/accept.txt` | Terms Vale should accept. |
+| `styles/config/vocabularies/Voice/reject.txt` | Terms Vale should flag. |
+| `.vale.ini` | Connects Markdown files to the Vale and Wetzler rule sets. |
+
+The current repository ships with one configurable voice profile, `Writing Voice`. To create a new voice, edit the same files to describe the new voice, then add samples that prove the desired direction.
+
+## Shape the Profile
+
+`voice/profile.yml` has seven fields:
+
+```yaml
+version: 1
+name: Writing Voice
+summary: >
+  Clear, grounded, lightly playful writing with engineering taste and a human pulse.
+principles:
+  - Lead with the real point.
+toneBoundaries:
+  - Casual is welcome; sloppy is not.
+allowedMoves:
+  - Use short paragraphs with visible air between ideas.
+bannedMoves:
+  - Do not over-polish into generic corporate prose.
+rewriteRubric:
+  - Preserve the author's intent and factual claims.
+```
+
+Use the fields this way:
+
+| Field | Write down |
+| --- | --- |
+| `summary` | The one-paragraph description of the voice. |
+| `principles` | The values the writer should preserve. |
+| `toneBoundaries` | The edges of the voice: what is welcome and what goes too far. |
+| `allowedMoves` | Specific moves the agent may use. |
+| `bannedMoves` | Specific moves the agent should avoid. |
+| `rewriteRubric` | The checklist used to judge a revision. |
+
+Good profile lines are concrete. Instead of "make it better," say "Preserve paths, commands, dates, error text, and concrete evidence."
+
+## Add a Writing Sample
+
+Use samples when you want Wetzler to learn from actual writing rather than a preference stated in the abstract.
+
+```bash
+pnpm wetzler samples add samples/post.md \
+  --label "launch post" \
+  --weight 2
+```
+
+The command copies the source Markdown into `voice/samples/` and writes a metadata file next to it. The original source path is recorded, but the sample content is preserved inside the voice repository.
+
+Use higher weights for samples that are especially representative.
+
+## Propose a Voice Update
+
+Create a proposal from one or more sample globs:
+
+```bash
+pnpm wetzler learn propose \
+  --samples "voice/samples/*.md" \
+  --rationale "Tune the profile from approved launch writing"
+```
+
+The proposal records:
+
+- matched sample paths,
+- deterministic observations,
+- suggested profile additions,
+- vocabulary changes,
+- optional Vale rule changes.
+
+The generated proposal is intentionally conservative. It gives you a safe starting point, not an automatic personality transplant.
+
+## Review the Proposal
+
+Open the proposal under:
+
+```text
+voice/proposals/<proposal-id>.yml
+```
+
+Look for these sections:
+
+```yaml
+changes:
+  profile:
+    principles: []
+    toneBoundaries: []
+    allowedMoves: []
+    bannedMoves: []
+    rewriteRubric: []
+  vocabulary:
+    accept: []
+    reject: []
+  rules: []
+```
+
+Edit the proposal before accepting it. Keep only changes that are supported by samples or clear product intent.
+
+## Validate and Accept the Update
+
+The MCP server can validate proposals, but accepting a proposal is CLI-only. That keeps durable voice changes behind an explicit human action.
+
+```bash
+pnpm wetzler learn accept <proposal-id>
+```
+
+Acceptance validates the proposal in a temporary Vale repository. If validation passes, Wetzler updates:
+
+- `voice/profile.yml`,
+- accepted vocabulary,
+- rejected vocabulary,
+- any proposed Vale rule files,
+- the proposal status.
+
+Commit accepted changes like any other product decision.
+
+## Add Vocabulary
+
+Use vocabulary when a word should be accepted or rejected everywhere.
+
+Accepted terms live here:
+
+```text
+styles/config/vocabularies/Voice/accept.txt
+```
+
+Rejected terms live here:
+
+```text
+styles/config/vocabularies/Voice/reject.txt
+```
+
+Use accepted terms for names, product words, or terms Vale would otherwise flag incorrectly. Use rejected terms for words that should almost never appear in the target voice.
+
+## Add a Vale Rule
+
+Use Vale rules when a repeatable pattern can be detected mechanically. For example, a rule can catch hype words, filler, corporate phrasing, weak evidence, or long sentences.
+
+Place rules in:
+
+```text
+styles/Voice/
+```
+
+Every proposed rule filename must be safe and end in `.yml`. The proposal validator checks that rule YAML has an `extends` value before allowing acceptance.
+
+## A Healthy Voice Update Loop
+
+| Step | Action | Result |
+| --- | --- | --- |
+| 1 | Add an approved writing sample with `samples add`. | The sample and metadata land in `voice/samples/`. |
+| 2 | Generate a proposal with `learn propose`. | Wetzler writes a reviewable file in `voice/proposals/`. |
+| 3 | Review and edit the proposal. | Only supported profile, vocabulary, and rule changes remain. |
+| 4 | Validate the proposal. | The proposed Vale setup is checked in a temporary repository. |
+| 5 | Accept after approval. | Durable profile, vocabulary, rules, and proposal status are updated. |
+
+The quiet wisdom here: let samples teach, but let review decide.

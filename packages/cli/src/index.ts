@@ -35,7 +35,7 @@ const program = new Command();
 program
   .name("wetzler")
   .description(
-    "Vale-backed, agent-guided Markdown revision in James's writing voice.",
+    "Vale-backed, agent-guided Markdown revision for a configured writing voice.",
   )
   .version("0.1.0");
 

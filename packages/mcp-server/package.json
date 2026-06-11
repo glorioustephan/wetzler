@@ -5,12 +5,7 @@
   "type": "module",
   "description": "MCP server for Writing Voice revision and voice-profile workflows.",
   "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jamesleebaker/wetzler.git",
-    "directory": "packages/mcp-server"
-  },
-  "mcpName": "io.github.jamesleebaker/wetzler",
+  "mcpName": "io.wetzler/wetzler",
   "engines": {
     "node": ">=22.0.0"
   },

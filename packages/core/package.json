@@ -5,11 +5,6 @@
   "type": "module",
   "description": "Core profile, Vale, sample, and proposal APIs for Writing Voice.",
   "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jamesleebaker/wetzler.git",
-    "directory": "packages/core"
-  },
   "engines": {
     "node": ">=22.0.0"
   },

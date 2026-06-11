@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap");
+
+:root {
+  --wetzler-cream: #f7f0e3;
+  --wetzler-cream-soft: #fbf7ee;
+  --wetzler-cream-deep: #eadfcb;
+  --wetzler-primary: #3f4c57;
+  --wetzler-primary-dark: #24313b;
+  --wetzler-gold: #907c57;
+  --wetzler-gold-soft: #c7b68d;
+  --wetzler-ink: #26323b;
+
+  --vp-c-bg: var(--wetzler-cream);
+  --vp-c-bg-alt: #efe5d4;
+  --vp-c-bg-elv: var(--wetzler-cream-soft);
+  --vp-c-bg-soft: #f2e8d8;
+  --vp-c-border: #d8cab3;
+  --vp-c-divider: #dfd2bf;
+  --vp-c-text-1: var(--wetzler-ink);
+  --vp-c-text-2: #53616a;
+  --vp-c-text-3: #6c746f;
+  --vp-c-brand-1: var(--wetzler-primary);
+  --vp-c-brand-2: #51606b;
+  --vp-c-brand-3: var(--wetzler-gold);
+  --vp-c-brand-soft: rgba(144, 124, 87, 0.18);
+  --vp-c-sponsor: var(--wetzler-gold);
+  --vp-button-brand-bg: var(--wetzler-primary);
+  --vp-button-brand-hover-bg: #51606b;
+  --vp-button-brand-active-bg: var(--wetzler-primary-dark);
+  --vp-button-brand-text: #fffaf0;
+  --vp-home-hero-name-color: var(--wetzler-primary);
+  --vp-home-hero-image-background-image: none;
+  --vp-home-hero-image-filter: none;
+  --vp-font-family-base:
+    "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --vp-font-family-mono:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.dark {
+  --vp-c-bg: #202a31;
+  --vp-c-bg-alt: #1a232a;
+  --vp-c-bg-elv: #26313a;
+  --vp-c-bg-soft: #2d3942;
+  --vp-c-border: #53616a;
+  --vp-c-divider: #46535d;
+  --vp-c-text-1: #f7f0e3;
+  --vp-c-text-2: #dfd6c5;
+  --vp-c-text-3: #c4b79f;
+  --vp-c-brand-1: #d0bd91;
+  --vp-c-brand-2: #b9a878;
+  --vp-c-brand-3: #907c57;
+  --vp-c-brand-soft: rgba(208, 189, 145, 0.18);
+  --vp-button-brand-bg: #907c57;
+  --vp-button-brand-hover-bg: #a89162;
+  --vp-button-brand-active-bg: #7c6a49;
+  --vp-button-brand-text: #fffaf0;
+  --vp-home-hero-name-color: #f7f0e3;
+}
+
+html,
+body {
+  background: var(--vp-c-bg);
+}
+
+body {
+  color: var(--vp-c-text-1);
+}
+
+.VPNavBarTitle .title,
+.VPHomeHero .name,
+.VPHomeHero .text,
+.VPDoc h1,
+.VPDoc h2,
+.VPDoc h3 {
+  font-family:
+    "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino,
+    serif;
+  letter-spacing: 0;
+}
+
+.VPHomeHero .name {
+  font-size: 7rem;
+  font-weight: 600;
+  line-height: 0.88;
+}
+
+.VPHomeHero .text {
+  color: var(--wetzler-primary);
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.dark .VPHomeHero .text {
+  color: var(--vp-c-text-1);
+}
+
+.VPHomeHero .tagline {
+  max-width: 46rem;
+  color: var(--vp-c-text-2);
+  font-size: 1.25rem;
+}
+
+.VPHomeHero .image-src {
+  width: min(620px, 100%);
+  max-height: 360px;
+  border: 1px solid rgba(144, 124, 87, 0.28);
+  border-radius: 8px;
+  box-shadow: 0 24px 72px rgba(36, 49, 59, 0.18);
+}
+
+.VPFeature {
+  border-color: rgba(144, 124, 87, 0.24);
+  background: rgba(255, 250, 240, 0.48);
+}
+
+.dark .VPFeature {
+  background: rgba(255, 250, 240, 0.04);
+}
+
+.VPButton.medium {
+  border-radius: 8px;
+}
+
+.VPDoc :where(h1, h2, h3) {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+.VPDoc h1 {
+  font-size: 3rem;
+}
+
+.VPDoc h2 {
+  border-top-color: rgba(144, 124, 87, 0.28);
+  font-size: 2rem;
+}
+
+.VPDoc p,
+.VPDoc li,
+.VPDoc table {
+  font-size: 1.02rem;
+  line-height: 1.78;
+}
+
+.VPDoc strong {
+  color: var(--wetzler-primary);
+}
+
+.dark .VPDoc strong {
+  color: #dec895;
+}
+
+.VPDoc a {
+  text-underline-offset: 3px;
+}
+
+.VPDoc blockquote {
+  border-left-color: var(--wetzler-gold);
+  color: var(--vp-c-text-2);
+}
+
+.VPDoc table {
+  display: table;
+  width: 100%;
+}
+
+.VPDoc tr {
+  border-color: rgba(144, 124, 87, 0.24);
+}
+
+.VPDoc th,
+.VPDoc td {
+  border-color: rgba(144, 124, 87, 0.24);
+}
+
+.vp-doc div[class*="language-"] {
+  border: 1px solid rgba(144, 124, 87, 0.2);
+  border-radius: 8px;
+}
+
+.custom-block {
+  border-radius: 8px;
+}
+
+@media (max-width: 760px) {
+  .VPHomeHero .name {
+    font-size: 4.2rem;
+  }
+
+  .VPHomeHero .text {
+    font-size: 2rem;
+  }
+
+  .VPHomeHero .tagline {
+    font-size: 1.05rem;
+  }
+
+  .VPDoc h1 {
+    font-size: 2.4rem;
+  }
+}

@@ -24,7 +24,7 @@ export async function prepareRevision(request: RevisionRequest): Promise<Revisio
     markdown: request.markdown,
     sourcePath: request.sourcePath ?? "draft.md",
     audience: request.audience ?? null,
-    goal: request.goal ?? "Preserve the intent while revising the Markdown into James's voice.",
+    goal: request.goal ?? "Preserve the intent while revising the Markdown into the configured writing voice.",
     voiceProfile,
     vale,
     rewriteChecklist: [

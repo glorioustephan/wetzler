@@ -1,6 +1,18 @@
+<p align="center">
+  <img src="./cover-image-optimized.png" alt="Writing Voice cover image" width="900" />
+</p>
+
+<p align="center">
+  <img alt="Node.js >=22" src="https://img.shields.io/badge/node-%3E%3D22-339933?logo=nodedotjs&logoColor=white" />
+  <img alt="pnpm 11.1.0" src="https://img.shields.io/badge/pnpm-11.1.0-F69220?logo=pnpm&logoColor=white" />
+  <img alt="TypeScript strict" src="https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript&logoColor=white" />
+  <img alt="MCPB runtime smoke test" src="https://img.shields.io/badge/MCPB-smoke%20tested-7057ff" />
+  <img alt="Codex plugin smoke test" src="https://img.shields.io/badge/Codex%20plugin-smoke%20tested-111827" />
+</p>
+
 # Writing Voice
 
-A TypeScript toolchain for revising Markdown into James's writing voice.
+A TypeScript toolchain for revising Markdown into a configured writing voice.
 
 The system has two layers:
 
@@ -15,13 +27,26 @@ pnpm build
 pnpm wetzler prepare README.md --audience "technical collaborator" --goal "explain the tool"
 ```
 
+## Validation
+
+CI runs on every push and pull request. These are the same local checks behind the visible badges:
+
+| Signal | Command | What it proves |
+| --- | --- | --- |
+| Build | `pnpm build` | Compiles the core package, MCP server, and CLI. |
+| Tests | `pnpm test` | Runs the Vitest behavior suite across all packages. |
+| Type-check | `pnpm typecheck` | Builds first, then checks strict TypeScript contracts. |
+| MCPB runtime | `pnpm validate:mcpb` | Builds the MCPB bundle, validates it, and smoke-tests MCP initialization. |
+| Codex plugin runtime | `pnpm validate:codex-plugin` | Validates the Codex plugin manifest and smoke-tests the launcher. |
+| Production dependencies | `pnpm audit --prod` | Audits shipped dependency paths for known vulnerabilities. |
+
 ## Main Commands
 
 ```bash
 wetzler lint README.md --json
 wetzler lint --stdin --path draft.md --json
 wetzler lint /path/to/draft.md --repo-root /path/to/wetzler
-wetzler prepare draft.md --audience "engineering manager" --goal "make it sound like James"
+wetzler prepare draft.md --audience "engineering manager" --goal "fit the configured voice"
 wetzler samples add samples/post.md --label "blog post" --weight 2
 wetzler learn propose --samples "voice/samples/*.md"
 wetzler learn accept <proposal-id>
@@ -36,8 +61,8 @@ Lint findings are still returned as normal results so agents can revise against 
 - `voice/profile.yml` is the durable voice contract.
 - `voice/samples/` stores writing samples and sample metadata.
 - `voice/proposals/` stores review-gated voice update proposals.
-- `styles/James/` stores Vale rules.
-- `styles/config/vocabularies/James/` stores accepted and rejected terms.
+- `styles/Voice/` stores Vale rules.
+- `styles/config/vocabularies/Voice/` stores accepted and rejected terms.
 - `packages/core/` exposes the public TypeScript API.
 - `packages/cli/` exposes the `wetzler` command.
 - `packages/mcp-server/` exposes the MCP server used by plugins.

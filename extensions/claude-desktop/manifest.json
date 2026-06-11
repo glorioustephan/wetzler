@@ -4,10 +4,10 @@
   "name": "wetzler",
   "display_name": "Writing Voice",
   "version": "0.1.0",
-  "description": "Revise Markdown in James's voice with a Vale-backed MCP server.",
-  "long_description": "Writing Voice packages James Baker's voice profile, Vale rules, and MCP tools for linting Markdown, preparing host-agent revision packets, and creating review-gated voice update proposals. Applying proposals is intentionally handled by the local CLI.",
+  "description": "Revise Markdown with a Vale-backed MCP server and configurable voice profile.",
+  "long_description": "Writing Voice packages a configurable voice profile, Vale rules, and MCP tools for linting Markdown, preparing host-agent revision packets, and creating review-gated voice update proposals. Applying proposals is intentionally handled by the local CLI.",
   "author": {
-    "name": "James Baker"
+    "name": "Writing Voice Maintainers"
   },
   "server": {
     "type": "node",

@@ -1,11 +1,11 @@
 ---
 name: rewrite-in-voice
-description: Rewrite Markdown in James Baker's voice using the local Writing Voice MCP server and Vale-backed voice contract.
+description: Rewrite Markdown with the configured Writing Voice MCP server and Vale-backed voice contract.
 ---
 
 # Rewrite In Voice
 
-Use this when the user asks to revise, rewrite, lint, or tune Markdown so it sounds like James.
+Use this when the user asks to revise, rewrite, lint, or tune Markdown so it fits the configured voice.
 
 ## Workflow
 

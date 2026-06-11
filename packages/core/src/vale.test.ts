@@ -10,7 +10,7 @@ describe("parseValeJson", () => {
       JSON.stringify({
         "draft.md": [
           {
-            Check: "James.Filler",
+            Check: "Voice.Filler",
             Line: 2,
             Span: [4, 8],
             Message: "This phrase may be padding.",
@@ -27,7 +27,7 @@ describe("parseValeJson", () => {
       line: 2,
       column: 4,
       endColumn: 8,
-      check: "James.Filler",
+      check: "Voice.Filler",
       severity: "suggestion",
       match: "very",
     });
@@ -40,14 +40,14 @@ describe("summarizeAlerts", () => {
       JSON.stringify({
         "draft.md": [
           {
-            Check: "James.Filler",
+            Check: "Voice.Filler",
             Line: 1,
             Span: [1, 4],
             Message: "one",
             Severity: "suggestion",
           },
           {
-            Check: "James.Hype",
+            Check: "Voice.Hype",
             Line: 2,
             Span: [1, 4],
             Message: "two",
@@ -65,8 +65,8 @@ describe("summarizeAlerts", () => {
         error: 0,
       },
       byCheck: {
-        "James.Filler": 1,
-        "James.Hype": 1,
+        "Voice.Filler": 1,
+        "Voice.Hype": 1,
       },
     });
   });

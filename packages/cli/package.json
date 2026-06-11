@@ -5,11 +5,6 @@
   "type": "module",
   "description": "Command-line interface for Writing Voice revision and proposal workflows.",
   "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jamesleebaker/wetzler.git",
-    "directory": "packages/cli"
-  },
   "engines": {
     "node": ">=22.0.0"
   },
