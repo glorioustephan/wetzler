@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img alt="Node.js >=22" src="https://img.shields.io/badge/node-%3E%3D22-339933?logo=nodedotjs&logoColor=white" />
+  <img alt="" src="https://img.shields.io/badge/node-%3E%3D22-339933?logo=nodedotjs&logoColor=white" />
   <img alt="pnpm 11.1.0" src="https://img.shields.io/badge/pnpm-11.1.0-F69220?logo=pnpm&logoColor=white" />
   <img alt="TypeScript strict" src="https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript&logoColor=white" />
   <img alt="MCPB runtime smoke test" src="https://img.shields.io/badge/MCPB-smoke%20tested-7057ff" />
@@ -31,14 +31,14 @@ pnpm wetzler prepare README.md --audience "technical collaborator" --goal "expla
 
 CI runs on every push and pull request. These are the same local checks behind the visible badges:
 
-| Signal | Command | What it proves |
-| --- | --- | --- |
-| Build | `pnpm build` | Compiles the core package, MCP server, and CLI. |
-| Tests | `pnpm test` | Runs the Vitest behavior suite across all packages. |
-| Type-check | `pnpm typecheck` | Builds first, then checks strict TypeScript contracts. |
-| MCPB runtime | `pnpm validate:mcpb` | Builds the MCPB bundle, validates it, and smoke-tests MCP initialization. |
-| Codex plugin runtime | `pnpm validate:codex-plugin` | Validates the Codex plugin manifest and smoke-tests the launcher. |
-| Production dependencies | `pnpm audit --prod` | Audits shipped dependency paths for known vulnerabilities. |
+| Signal                  | Command                      | What it proves                                                            |
+| ----------------------- | ---------------------------- | ------------------------------------------------------------------------- |
+| Build                   | `pnpm build`                 | Compiles the core package, MCP server, and CLI.                           |
+| Tests                   | `pnpm test`                  | Runs the Vitest behavior suite across all packages.                       |
+| Type-check              | `pnpm typecheck`             | Builds first, then checks strict TypeScript contracts.                    |
+| MCPB runtime            | `pnpm validate:mcpb`         | Builds the MCPB bundle, validates it, and smoke-tests MCP initialization. |
+| Codex plugin runtime    | `pnpm validate:codex-plugin` | Validates the Codex plugin manifest and smoke-tests the launcher.         |
+| Production dependencies | `pnpm audit --prod`          | Audits shipped dependency paths for known vulnerabilities.                |
 
 ## Main Commands
 
