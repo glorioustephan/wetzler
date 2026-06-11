@@ -1,0 +1,47 @@
+{
+  "name": "@wetzler/cli",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Command-line interface for Writing Voice revision and proposal workflows.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesleebaker/wetzler.git",
+    "directory": "packages/cli"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "bin": {
+    "wetzler": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@wetzler/core": "workspace:*",
+    "@wetzler/mcp-server": "workspace:*",
+    "commander": "15.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.2",
+    "vitest": "4.1.8"
+  }
+}

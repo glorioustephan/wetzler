@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Type-check packages
+        run: pnpm typecheck
+
+      - name: Validate MCPB package
+        run: pnpm validate:mcpb
+
+      - name: Validate Codex plugin
+        run: pnpm validate:codex-plugin
+
+      - name: Audit production dependencies
+        run: pnpm audit --prod

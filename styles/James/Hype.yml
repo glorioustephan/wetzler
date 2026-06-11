@@ -1,0 +1,12 @@
+extends: existence
+message: "This sounds hype-heavy. Replace it with a concrete claim or earned enthusiasm."
+level: warning
+ignorecase: true
+tokens:
+  - game-changing
+  - revolutionary
+  - cutting-edge
+  - world-class
+  - best-in-class
+  - seamless
+

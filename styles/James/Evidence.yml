@@ -1,0 +1,11 @@
+extends: existence
+message: "This certainty marker may need evidence, a softer claim, or a clearer source."
+level: suggestion
+ignorecase: true
+tokens:
+  - obviously
+  - clearly
+  - undoubtedly
+  - without question
+  - everyone knows
+

@@ -1,0 +1,12 @@
+extends: existence
+message: "This phrase may be padding. Keep it only if it adds rhythm or useful emphasis."
+level: suggestion
+ignorecase: true
+tokens:
+  - actually
+  - basically
+  - essentially
+  - just
+  - really
+  - very
+

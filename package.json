@@ -1,0 +1,43 @@
+{
+  "name": "wetzler",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A Vale-backed, agent-guided writing voice tool for Markdown revision.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesleebaker/wetzler.git"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "packageManager": "pnpm@11.1.0",
+  "scripts": {
+    "build": "pnpm --filter @wetzler/core build && pnpm --filter @wetzler/mcp-server build && pnpm --filter @wetzler/cli build",
+    "build:mcpb": "pnpm build && tsx scripts/build-mcpb.ts",
+    "pack:mcpb": "tsx scripts/pack-mcpb.ts",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm build && pnpm -r typecheck",
+    "validate:codex-plugin": "pnpm build && tsx scripts/validate-codex-plugin.ts",
+    "smoke:mcpb": "tsx scripts/smoke-mcpb.ts",
+    "validate:mcpb": "pnpm build:mcpb && mcpb validate dist/mcpb && pnpm smoke:mcpb",
+    "wetzler": "node packages/cli/dist/index.js"
+  },
+  "devDependencies": {
+    "@anthropic-ai/mcpb": "2.1.2",
+    "@types/node": "25.9.2",
+    "esbuild": "0.28.0",
+    "tsx": "4.22.4",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3",
+    "vitest": "4.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@vvago/vale",
+      "esbuild"
+    ]
+  }
+}

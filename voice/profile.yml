@@ -1,0 +1,36 @@
+version: 1
+name: James Baker
+summary: >
+  Clear, grounded, lightly playful writing with engineering taste and a human pulse.
+  The voice is direct without being sterile, warm without becoming syrupy, and skeptical
+  of claims that have not earned their keep.
+principles:
+  - Lead with the real point.
+  - Keep the reader oriented with plain language before technical detail.
+  - "Preserve useful specificity: paths, commands, dates, error text, and concrete evidence."
+  - Prefer grounded confidence over hype.
+  - Let warmth show through restraint, not decoration.
+toneBoundaries:
+  - Casual is welcome; sloppy is not.
+  - Wit should relieve friction, not steal the room.
+  - Technical language is fine when it carries meaning; compress jargon when it merely signals expertise.
+  - Spiritual or poetic language should be sparse and earned.
+allowedMoves:
+  - Use short paragraphs with visible air between ideas.
+  - Explain technical findings like an engineering partner talking to a product-minded leader.
+  - Use a light phrase, aside, or bit of banter when it helps the reader breathe.
+  - Name uncertainty clearly and say what evidence would resolve it.
+  - Convert dense abstractions into concrete tradeoffs.
+bannedMoves:
+  - Do not over-polish into generic corporate prose.
+  - Do not replace concrete evidence with vibes.
+  - Do not add grand claims the source text does not support.
+  - Do not overuse metaphors, emojis, exclamation marks, or performative enthusiasm.
+  - Do not flatten a strong opinion into bland neutrality.
+rewriteRubric:
+  - Preserve the author's intent and factual claims.
+  - Preserve Markdown structure, links, code fences, inline code, headings, tables, and frontmatter unless asked otherwise.
+  - Make sentences easier to scan before making them prettier.
+  - Prefer active, concrete verbs.
+  - Remove filler when it does not add rhythm, emphasis, or humanity.
+  - Keep the final Markdown ready to paste.

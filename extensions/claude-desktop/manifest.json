@@ -1,0 +1,49 @@
+{
+  "$schema": "https://github.com/modelcontextprotocol/mcpb/raw/main/schemas/mcpb-manifest-v0.4.schema.json",
+  "manifest_version": "0.4",
+  "name": "wetzler",
+  "display_name": "Writing Voice",
+  "version": "0.1.0",
+  "description": "Revise Markdown in James's voice with a Vale-backed MCP server.",
+  "long_description": "Writing Voice packages James Baker's voice profile, Vale rules, and MCP tools for linting Markdown, preparing host-agent revision packets, and creating review-gated voice update proposals. Applying proposals is intentionally handled by the local CLI.",
+  "author": {
+    "name": "James Baker"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "WRITING_VOICE_ROOT": "${__dirname}/repo"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "lint_markdown",
+      "description": "Run the pinned Vale voice rules against Markdown."
+    },
+    {
+      "name": "prepare_revision",
+      "description": "Prepare a voice contract and Vale findings for host-agent Markdown revision."
+    },
+    {
+      "name": "propose_voice_update",
+      "description": "Create a review-gated voice update proposal from samples."
+    },
+    {
+      "name": "validate_voice_update",
+      "description": "Validate a review-gated voice update proposal without applying it."
+    }
+  ],
+  "keywords": ["writing", "voice", "markdown", "vale", "mcp"],
+  "license": "UNLICENSED",
+  "compatibility": {
+    "platforms": ["darwin"],
+    "runtimes": {
+      "node": ">=22.0.0"
+    }
+  }
+}

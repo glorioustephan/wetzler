@@ -1,0 +1,15 @@
+extends: substitution
+message: "Consider '%s' instead of '%s' unless the corporate phrase is intentional."
+level: suggestion
+ignorecase: true
+swap:
+  utilize: use
+  leverage: use
+  facilitate: help
+  commence: start
+  terminate: end
+  aforementioned: earlier
+  subsequent: later
+  "in order to": to
+  "at this point in time": now
+

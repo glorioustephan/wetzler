@@ -1,0 +1,7 @@
+extends: occurrence
+message: "This sentence may be doing too much. Split it if the reader has to hold several ideas at once."
+level: suggestion
+scope: sentence
+max: 38
+token: \b\w+\b
+

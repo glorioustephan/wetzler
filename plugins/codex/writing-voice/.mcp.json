@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wetzler": {
+      "command": "node",
+      "args": ["./scripts/start-mcp.mjs"]
+    }
+  }
+}
