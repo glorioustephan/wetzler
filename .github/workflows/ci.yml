@@ -15,6 +15,9 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 11.1.0
+          # Standalone binary bundles its own Node.js, so installation does not
+          # depend on the runner's system Node (self-hosted runners may be older).
+          standalone: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
