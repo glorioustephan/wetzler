@@ -28,6 +28,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Workspace packages resolve each other via dist/ (see exports in
+      # packages/*/package.json), so a build must precede the test run.
+      - name: Build packages
+        run: pnpm build
+
       - name: Run tests
         run: pnpm test
 
