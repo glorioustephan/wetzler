@@ -7,6 +7,29 @@ description: Fix common Wetzler setup, CLI, MCP, Vale, and documentation deploym
 
 Start with the exact command that failed, then check the matching section below. Wetzler tries to keep errors plain, but a little path clarity goes a long way.
 
+If the command prints JSON, that is usually not an error by itself. Look for `runtimeError`, `ok`, `alerts`, or the process exit code to understand what happened.
+
+## Problem: I Got JSON and Do Not Know What It Means
+
+**Cause:** Wetzler commands return structured data so agents and scripts can read it reliably.
+
+**Solution:**
+
+For `lint`, look at:
+
+- `alerts`: the list of things Wetzler noticed.
+- `summary.alertCount`: the number of findings.
+- `runtimeError`: a real tool failure, such as a missing config file.
+
+For `prepare`, look for:
+
+- `voiceProfile`: the style guide the agent should follow.
+- `vale.alerts`: the rule findings.
+- `rewriteChecklist`: the things the agent must preserve.
+- `outputInstructions`: how the agent should return the rewrite.
+
+If `alerts` is empty and `runtimeError` is `null`, the check ran successfully and found nothing to flag.
+
 ## Problem: Wetzler Cannot Find the Voice Root
 
 **Symptom:**
@@ -56,7 +79,7 @@ Increase the timeout:
 pnpm wetzler lint large-doc.md --timeout-ms 30000 --json
 ```
 
-For very large documents, split the draft into sections and revise one section at a time.
+For long documents, split the draft into sections and revise one section at a time.
 
 ## Problem: `pnpm wetzler` Cannot Find the Built CLI
 
@@ -109,6 +132,16 @@ pnpm wetzler learn propose --samples "voice/samples/*.md"
 ```
 
 If the observations are useful but the generated changes are empty, edit the proposal manually before accepting it. The proposal format is designed for that.
+
+## Problem: Wetzler Flags a Sentence You Want to Keep
+
+**Cause:** The rules are evidence, not law. A rule can be too broad for a specific sentence.
+
+**Solution:**
+
+Keep the sentence when changing it would remove meaning, rhythm, a product name, a quoted phrase, or a useful technical detail.
+
+If the same false positive happens often, update vocabulary or create a proposal that changes the rule. Do not weaken a good draft only to get to zero alerts.
 
 ## Problem: Docs Build Locally but Pages Shows Broken Assets
 

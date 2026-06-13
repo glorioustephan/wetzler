@@ -45,7 +45,7 @@ export default defineConfig({
         text: "Voice Workflows",
         items: [
           { text: "Set Up a Voice", link: "/voice-setup" },
-          { text: "Agentic Workflows", link: "/agentic-workflows" },
+          { text: "Agent Workflows", link: "/agentic-workflows" },
           { text: "Troubleshooting", link: "/troubleshooting" },
         ],
       },

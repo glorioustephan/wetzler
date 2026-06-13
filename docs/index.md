@@ -30,7 +30,17 @@ features:
 
 ## What Wetzler Provides
 
-Wetzler helps a writing assistant revise Markdown into a specific voice without hiding the rules in a model prompt. It combines a durable voice profile, Vale lint rules, a command-line tool, and an MCP server that agentic tools can call before they rewrite.
+Wetzler helps a writing assistant revise Markdown into a specific voice without hiding the rules in a model prompt. It combines a voice profile, writing samples, Vale lint rules, a command-line tool, and an MCP server that AI tools can call before they rewrite.
+
+In plain English: Wetzler gives the AI a style guide, a checklist, and examples before it edits. The AI still does the rewrite. Wetzler makes the instructions visible, repeatable, and reviewable.
+
+Wetzler is useful when you want clearer writing but do not want the assistant to:
+
+- erase important details,
+- flatten your personality,
+- remove links, commands, dates, or code,
+- make unsupported claims,
+- silently change the voice rules without review.
 
 The result is a calm workflow:
 
@@ -58,11 +68,12 @@ Use it when you want to:
 
 | Piece | What it does |
 | --- | --- |
-| `voice/profile.yml` | The durable voice contract: principles, tone boundaries, allowed moves, banned moves, and rewrite rubric. |
-| `styles/voice/` | Vale rules that catch specific writing patterns. |
-| `styles/config/vocabularies/voice/` | Accepted and rejected words for the Vale vocabulary. |
-| `wetzler lint` | Runs the pinned Vale rules against Markdown. |
-| `wetzler prepare` | Builds the packet an agent uses to revise safely. |
+| `voice/profile.yml` | The written style guide. It says what the voice values and what it should avoid. |
+| `voice/samples/` | Example writing that shows the voice in practice. |
+| `styles/voice/` | Mechanical checks for repeatable writing patterns, like hype or filler. |
+| `styles/config/vocabularies/voice/` | Words the checker should always accept or flag. |
+| `wetzler lint` | Checks Markdown and reports what the rules noticed. It does not rewrite. |
+| `wetzler prepare` | Builds the packet an agent uses to revise safely. This is the usual first step before a rewrite. |
 | `wetzler samples add` | Copies a writing sample into the voice library with metadata. |
 | `wetzler learn propose` | Creates a review-gated proposal from samples. |
 | `wetzler learn accept` | Applies a validated proposal after human approval. |

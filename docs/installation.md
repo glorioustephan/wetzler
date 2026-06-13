@@ -7,6 +7,18 @@ description: Install and package Wetzler for CLI use, Codex, Claude Code, Claude
 
 Wetzler can be used in several ways. Start with the source checkout, then choose the surface that matches how you write.
 
+## Choose the Right Path
+
+| If you want to... | Use this |
+| --- | --- |
+| Try Wetzler from a terminal | Install from source and run `pnpm wetzler`. |
+| Use Wetzler inside Codex | Build the repo, then use the repo-local Codex plugin. |
+| Use Wetzler inside Claude Code | Build the repo, then point Claude Code at the Claude Code wrapper. |
+| Install a packaged extension in Claude Desktop | Build an MCPB bundle with `pnpm pack:mcpb`. |
+| Wire Wetzler into another local agent | Start the MCP server directly or use the wrapper pattern. |
+
+All paths start the same way: install dependencies and run `pnpm build`. That creates the CLI and MCP server files the integrations call.
+
 ## Install From Source
 
 ```bash
@@ -69,6 +81,8 @@ pnpm validate:codex-plugin
 
 Use the `rewrite-in-voice` skill when you want the agent to prepare a revision packet, rewrite the Markdown, lint the result, and return paste-ready Markdown.
 
+Plainly: Codex talks to Wetzler, Wetzler prepares the voice guidance, and Codex performs the edit.
+
 ## Install for Claude Code
 
 The repository also includes a Claude Code wrapper at:
@@ -98,7 +112,7 @@ pnpm build
 
 ## Package an MCPB Bundle
 
-Use MCPB when you want a packaged extension for Claude Desktop or another MCPB-aware client.
+Use MCPB when you want a packaged extension for Claude Desktop or another MCPB-aware client. This is the "installable package" path, not the day-to-day source checkout path.
 
 ```bash
 pnpm validate:mcpb
@@ -123,7 +137,7 @@ pnpm build
 WRITING_VOICE_ROOT=/path/to/wetzler node packages/cli/dist/index.js mcp
 ```
 
-The server communicates over stdio, which is what most local MCP clients expect.
+The server communicates over stdio. That means the client sends messages through the process input and output streams instead of through a web URL.
 
 ## Verify an Installation
 

@@ -7,6 +7,16 @@ description: Create, tune, and safely update a Wetzler voice profile with sample
 
 A Wetzler voice is a small set of plain files. That is the point. You can read it, diff it, review it, and change it without trusting a hidden prompt.
 
+Think of the voice in three layers:
+
+| Layer | What it answers |
+| --- | --- |
+| Profile | What should the writing feel like? |
+| Samples | What does good writing look like in real examples? |
+| Rules and vocabulary | What should the checker always notice? |
+
+You do not have to perfect all three at once. Start with the profile, add a few strong samples, then tune rules only when a pattern repeats.
+
 ## Voice Files
 
 | File or directory | Purpose |
@@ -55,9 +65,13 @@ Use the fields this way:
 
 Good profile lines are concrete. Instead of "make it better," say "Preserve paths, commands, dates, error text, and concrete evidence."
 
+If a 15-year-old could point to the sentence and say whether the agent followed it, the line is probably specific enough.
+
 ## Add a Writing Sample
 
 Use samples when you want Wetzler to learn from actual writing rather than a preference stated in the abstract.
+
+A good sample is something you would be happy to imitate. It should show the voice you want, not only the topic you write about. Short samples are fine if they contain real choices: sentence rhythm, level of detail, warmth, restraint, humor, or product judgment.
 
 ```bash
 pnpm wetzler samples add samples/post.md \
@@ -67,7 +81,7 @@ pnpm wetzler samples add samples/post.md \
 
 The command copies the source Markdown into `voice/samples/` and writes a metadata file next to it. The original source path is recorded, but the sample content is preserved inside the voice repository.
 
-Use higher weights for samples that are especially representative.
+Use higher weights for samples that are especially representative. A weight of `2` means "pay extra attention to this one." A weight of `1` means "this is useful, but ordinary."
 
 ## Propose a Voice Update
 
@@ -116,6 +130,13 @@ changes:
 
 Edit the proposal before accepting it. Keep only changes that are supported by samples or clear product intent.
 
+Read it like a product decision:
+
+- Does this change make future writing better?
+- Is it based on real samples, not one weird sentence?
+- Would you be comfortable applying it to every future draft?
+- Is it specific enough that an agent can follow it?
+
 ## Validate and Accept the Update
 
 Validate a proposal without applying it, from the CLI or the MCP server:
@@ -157,6 +178,8 @@ styles/config/vocabularies/voice/reject.txt
 ```
 
 Use accepted terms for names, product words, or terms Vale would otherwise flag incorrectly. Use rejected terms for words that should almost never appear in the target voice.
+
+Example: add a product name like `Wetzler` to the accepted list if the spelling checker flags it. Add a phrase like `best-in-class` to the rejected list if it usually weakens the voice.
 
 ## Add a Vale Rule
 

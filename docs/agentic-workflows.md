@@ -1,11 +1,15 @@
 ---
-title: Agentic Workflows
+title: Agent Workflows
 description: Use Wetzler with Codex, Claude, and other MCP-capable agents to revise Markdown and refine a writing voice.
 ---
 
-# Agentic Workflows
+# Agent Workflows
 
 Wetzler does not call a model directly. It prepares the context an agent needs, then the host agent performs the rewrite. This keeps the system inspectable: Vale finds issues, Wetzler packages the voice contract, and the agent revises inside those boundaries.
+
+Plainly: Wetzler is the coach and the checklist. Codex, Claude, or another assistant is the writer doing the edit.
+
+MCP is the way the assistant asks Wetzler for help. Instead of you copying command output around, the assistant can call tools like `prepare_revision` and `lint_markdown` directly.
 
 ## The Revision Contract
 
@@ -35,6 +39,8 @@ Ask the agent to use this loop:
 5. Keep intentional wording when the linter is too narrow.
 6. Return revised Markdown only unless you asked for notes, a diff, or a file write.
 
+This loop matters because the first pass gives the agent guidance, and the second pass checks whether the revised draft still fits the rules.
+
 ## Prompt an Agent
 
 Use a prompt like this:
@@ -58,6 +64,8 @@ Return a concise summary and a unified diff.
 Do not write the file unless I explicitly approve the diff.
 ```
 
+If you are not technical, ask for paste-ready Markdown first. Ask for a diff when you want to review exact line-by-line changes before anything is written.
+
 ## Use the MCP Tools
 
 The MCP server exposes four tools:
@@ -74,6 +82,8 @@ It also exposes:
 - `wetzler://profile`, the current voice profile.
 - `wetzler://rules`, the Vale configuration and rules.
 - `rewrite_in_voice`, a prompt that asks the host agent to revise with the packet.
+
+Most people do not need to memorize these names. They are here so an agent host can call the right tool at the right time.
 
 ## Refine the Voice With an Agent
 
@@ -122,4 +132,4 @@ Vale findings are evidence, not law. Keep a flagged sentence when:
 - changing it would alter meaning,
 - the rule is too broad for the current context.
 
-When a false positive repeats, update vocabulary or propose a Vale rule change. Do not make every draft worse just to make every alert disappear.
+When a false positive repeats, update vocabulary or propose a Vale rule change. Do not make every draft worse only to make every alert disappear.
