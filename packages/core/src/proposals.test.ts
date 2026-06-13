@@ -49,7 +49,7 @@ describe("voice learning proposals", () => {
     );
     editableProposal.changes.vocabulary.accept.push("LaunchNote");
     editableProposal.changes.rules.push({
-      filename: "LaunchNote.yml",
+      filename: "launch-note.yml",
       contents:
         'extends: existence\nmessage: "Launch note test rule."\nlevel: suggestion\ntokens:\n  - placeholder\n',
     });
@@ -71,13 +71,13 @@ describe("voice learning proposals", () => {
         "styles",
         "config",
         "vocabularies",
-        "Voice",
+        "voice",
         "accept.txt",
       ),
       "utf8",
     );
     const rule = await readFile(
-      path.join(repoRoot, "styles", "Voice", "LaunchNote.yml"),
+      path.join(repoRoot, "styles", "voice", "launch-note.yml"),
       "utf8",
     );
 
@@ -113,7 +113,7 @@ describe("voice learning proposals", () => {
       await readFile(proposalPath, "utf8"),
     ) as VoiceUpdateProposal;
     editableProposal.changes.rules.push({
-      filename: "Broken.yml",
+      filename: "broken.yml",
       contents: "message: Missing extends\n",
     });
     await writeFile(proposalPath, stringify(editableProposal), "utf8");
@@ -133,16 +133,16 @@ async function createTempVoiceRepo(): Promise<string> {
   const repoRoot = await mkdtemp(path.join(os.tmpdir(), "wetzler-"));
   await mkdir(path.join(repoRoot, "voice", "samples"), { recursive: true });
   await mkdir(path.join(repoRoot, "voice", "proposals"), { recursive: true });
-  await mkdir(path.join(repoRoot, "styles", "Voice"), { recursive: true });
+  await mkdir(path.join(repoRoot, "styles", "voice"), { recursive: true });
   await mkdir(
-    path.join(repoRoot, "styles", "config", "vocabularies", "Voice"),
+    path.join(repoRoot, "styles", "config", "vocabularies", "voice"),
     {
       recursive: true,
     },
   );
   await writeFile(
     path.join(repoRoot, ".vale.ini"),
-    "StylesPath = styles\nMinAlertLevel = suggestion\nVocab = Voice\n\n[*.md]\nBasedOnStyles = Voice\n",
+    "StylesPath = styles\nMinAlertLevel = suggestion\nVocab = voice\n\n[*.md]\nBasedOnStyles = voice\n",
     "utf8",
   );
   await writeFile(
@@ -165,7 +165,7 @@ async function createTempVoiceRepo(): Promise<string> {
       "styles",
       "config",
       "vocabularies",
-      "Voice",
+      "voice",
       "accept.txt",
     ),
     "Codex\n",
@@ -177,7 +177,7 @@ async function createTempVoiceRepo(): Promise<string> {
       "styles",
       "config",
       "vocabularies",
-      "Voice",
+      "voice",
       "reject.txt",
     ),
     "utilize\n",

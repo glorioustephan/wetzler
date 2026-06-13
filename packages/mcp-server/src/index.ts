@@ -42,13 +42,14 @@ export function createWritingVoiceServer(): McpServer {
         idempotentHint: true,
       },
     },
-    async ({ markdown, path }) => {
-      const result = await lintMarkdown({
-        markdown,
-        filePath: path ?? "draft.md",
-      });
-      return toToolResult(result, result.runtimeError?.message ?? null);
-    },
+    async ({ markdown, path }) =>
+      safeToolResult(async () => {
+        const result = await lintMarkdown({
+          markdown,
+          filePath: path ?? "draft.md",
+        });
+        return toToolResult(result, result.runtimeError?.message ?? null);
+      }),
   );
 
   server.registerTool(
@@ -70,20 +71,21 @@ export function createWritingVoiceServer(): McpServer {
         idempotentHint: true,
       },
     },
-    async ({ markdown, path, audience, goal }) => {
-      const request: RevisionRequest = {
-        markdown,
-        sourcePath: path ?? "draft.md",
-      };
-      if (audience !== undefined) {
-        request.audience = audience;
-      }
-      if (goal !== undefined) {
-        request.goal = goal;
-      }
-      const packet = await prepareRevision(request);
-      return toToolResult(packet, packet.vale.runtimeError?.message ?? null);
-    },
+    async ({ markdown, path, audience, goal }) =>
+      safeToolResult(async () => {
+        const request: RevisionRequest = {
+          markdown,
+          sourcePath: path ?? "draft.md",
+        };
+        if (audience !== undefined) {
+          request.audience = audience;
+        }
+        if (goal !== undefined) {
+          request.goal = goal;
+        }
+        const packet = await prepareRevision(request);
+        return toToolResult(packet, packet.vale.runtimeError?.message ?? null);
+      }),
   );
 
   server.registerTool(
@@ -104,11 +106,13 @@ export function createWritingVoiceServer(): McpServer {
       },
     },
     async ({ sampleGlobs, rationale }) =>
-      toToolResult(
-        await createVoiceUpdateProposal(
-          rationale === undefined
-            ? { sampleGlobs }
-            : { sampleGlobs, rationale },
+      safeToolResult(async () =>
+        toToolResult(
+          await createVoiceUpdateProposal(
+            rationale === undefined
+              ? { sampleGlobs }
+              : { sampleGlobs, rationale },
+          ),
         ),
       ),
   );
@@ -130,7 +134,9 @@ export function createWritingVoiceServer(): McpServer {
       },
     },
     async ({ proposalId }) =>
-      toToolResult(await validateVoiceUpdateProposal(proposalId)),
+      safeToolResult(async () =>
+        toToolResult(await validateVoiceUpdateProposal(proposalId)),
+      ),
   );
 
   server.registerResource(
@@ -166,16 +172,14 @@ export function createWritingVoiceServer(): McpServer {
     },
     async (uri) => {
       const paths = getVoicePaths();
-      const ruleFilenames = (
-        await readdir(path.join(paths.stylesPath, "Voice"))
-      )
+      const ruleFilenames = (await readdir(paths.voiceRulesDir))
         .filter((filename) => filename.endsWith(".yml"))
         .sort();
       const rules = await Promise.all(
         ruleFilenames.map(async (filename) => ({
           filename,
           contents: await readFile(
-            path.join(paths.stylesPath, "Voice", filename),
+            path.join(paths.voiceRulesDir, filename),
             "utf8",
           ),
         })),
@@ -252,27 +256,27 @@ export async function startMcpServer(): Promise<void> {
   await server.connect(new StdioServerTransport());
 }
 
-export function toTextResult(value: unknown): {
+export type ToolResult = {
   content: Array<{ type: "text"; text: string }>;
-} {
-  return {
-    content: [
-      {
-        type: "text",
-        text: JSON.stringify(value, null, 2),
-      },
-    ],
-  };
+  structuredContent: Record<string, unknown>;
+  isError?: boolean;
+};
+
+export async function safeToolResult(
+  run: () => Promise<ToolResult>,
+): Promise<ToolResult> {
+  try {
+    return await run();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return toToolResult(null, message);
+  }
 }
 
 export function toToolResult(
   value: unknown,
   error: string | null = null,
-): {
-  content: Array<{ type: "text"; text: string }>;
-  structuredContent: Record<string, unknown>;
-  isError?: boolean;
-} {
+): ToolResult {
   const structuredContent = error
     ? { ok: false, data: value, error }
     : { ok: true, data: value, error: null };

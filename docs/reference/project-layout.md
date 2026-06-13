@@ -35,8 +35,8 @@ wetzler/
 | `voice/profile.yml` | Durable voice profile. |
 | `voice/samples/` | Stored voice samples. |
 | `voice/proposals/` | Voice update proposals. |
-| `styles/Voice/` | Vale rules. |
-| `styles/config/vocabularies/Voice/` | Accepted and rejected vocabulary. |
+| `styles/voice/` | Vale rules. |
+| `styles/config/vocabularies/voice/` | Accepted and rejected vocabulary. |
 
 ## Packages
 

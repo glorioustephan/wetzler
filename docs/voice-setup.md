@@ -14,9 +14,9 @@ A Wetzler voice is a small set of plain files. That is the point. You can read i
 | `voice/profile.yml` | The voice contract used in every revision packet. |
 | `voice/samples/` | Markdown samples and metadata copied by `wetzler samples add`. |
 | `voice/proposals/` | Review-gated update proposals created by `wetzler learn propose`. |
-| `styles/Voice/` | Vale rules for patterns the voice should catch. |
-| `styles/config/vocabularies/Voice/accept.txt` | Terms Vale should accept. |
-| `styles/config/vocabularies/Voice/reject.txt` | Terms Vale should flag. |
+| `styles/voice/` | Vale rules for patterns the voice should catch. |
+| `styles/config/vocabularies/voice/accept.txt` | Terms Vale should accept. |
+| `styles/config/vocabularies/voice/reject.txt` | Terms Vale should flag. |
 | `.vale.ini` | Connects Markdown files to the Vale and Wetzler rule sets. |
 
 The current repository ships with one configurable voice profile, `Writing Voice`. To create a new voice, edit the same files to describe the new voice, then add samples that prove the desired direction.
@@ -117,7 +117,13 @@ Edit the proposal before accepting it. Keep only changes that are supported by s
 
 ## Validate and Accept the Update
 
-The MCP server can validate proposals, but accepting a proposal is CLI-only. That keeps durable voice changes behind an explicit human action.
+Validate a proposal without applying it, from the CLI or the MCP server:
+
+```bash
+pnpm wetzler learn validate <proposal-id>
+```
+
+Accepting a proposal is CLI-only. That keeps durable voice changes behind an explicit human action.
 
 ```bash
 pnpm wetzler learn accept <proposal-id>
@@ -140,13 +146,13 @@ Use vocabulary when a word should be accepted or rejected everywhere.
 Accepted terms live here:
 
 ```text
-styles/config/vocabularies/Voice/accept.txt
+styles/config/vocabularies/voice/accept.txt
 ```
 
 Rejected terms live here:
 
 ```text
-styles/config/vocabularies/Voice/reject.txt
+styles/config/vocabularies/voice/reject.txt
 ```
 
 Use accepted terms for names, product words, or terms Vale would otherwise flag incorrectly. Use rejected terms for words that should almost never appear in the target voice.
@@ -158,7 +164,7 @@ Use Vale rules when a repeatable pattern can be detected mechanically. For examp
 Place rules in:
 
 ```text
-styles/Voice/
+styles/voice/
 ```
 
 Every proposed rule filename must be safe and end in `.yml`. The proposal validator checks that rule YAML has an `extends` value before allowing acceptance.

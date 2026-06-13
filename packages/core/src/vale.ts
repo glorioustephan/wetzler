@@ -16,7 +16,7 @@ type RunValeInput = {
   filePath?: string;
   repoRoot?: string;
   timeoutMs?: number;
-  maxOutputBytes?: number;
+  maxOutputChars?: number;
 };
 
 type ProcessResult = {
@@ -28,7 +28,8 @@ type ProcessResult = {
 
 const severityValues = new Set<ValeSeverity>(["suggestion", "warning", "error"]);
 const defaultTimeoutMs = 15_000;
-const defaultMaxOutputBytes = 1_000_000;
+const defaultMaxOutputChars = 1_000_000;
+const killGraceMs = 2_000;
 
 export async function lintMarkdown(input: RunValeInput): Promise<ValeLintResult> {
   const repoRoot = input.repoRoot ?? resolveRepoRoot();
@@ -50,10 +51,10 @@ export async function lintMarkdown(input: RunValeInput): Promise<ValeLintResult>
     throw new Error("lintMarkdown requires either markdown or filePath.");
   }
 
-  const processOptions: { cwd: string; stdin?: string; timeoutMs: number; maxOutputBytes: number } = {
+  const processOptions: { cwd: string; stdin?: string; timeoutMs: number; maxOutputChars: number } = {
     cwd: repoRoot,
     timeoutMs: input.timeoutMs ?? defaultTimeoutMs,
-    maxOutputBytes: input.maxOutputBytes ?? defaultMaxOutputBytes
+    maxOutputChars: input.maxOutputChars ?? defaultMaxOutputChars
   };
   if (input.markdown !== undefined) {
     processOptions.stdin = input.markdown;
@@ -171,7 +172,7 @@ function resolveValeBinary(): string {
 function runProcess(
   command: string,
   args: string[],
-  options: { cwd: string; stdin?: string; timeoutMs: number; maxOutputBytes: number }
+  options: { cwd: string; stdin?: string; timeoutMs: number; maxOutputChars: number }
 ): Promise<ProcessResult> {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
@@ -181,25 +182,31 @@ function runProcess(
     let stdout = "";
     let stderr = "";
     let timedOut = false;
+    let killTimeout: NodeJS.Timeout | undefined;
     const timeout = setTimeout(() => {
       timedOut = true;
       child.kill("SIGTERM");
+      killTimeout = setTimeout(() => {
+        child.kill("SIGKILL");
+      }, killGraceMs);
     }, options.timeoutMs);
 
     child.stdout.setEncoding("utf8");
     child.stderr.setEncoding("utf8");
     child.stdout.on("data", (chunk: string) => {
-      stdout = appendCapped(stdout, chunk, options.maxOutputBytes);
+      stdout = appendCapped(stdout, chunk, options.maxOutputChars);
     });
     child.stderr.on("data", (chunk: string) => {
-      stderr = appendCapped(stderr, chunk, options.maxOutputBytes);
+      stderr = appendCapped(stderr, chunk, options.maxOutputChars);
     });
     child.on("error", (error) => {
       clearTimeout(timeout);
+      clearTimeout(killTimeout);
       reject(error);
     });
     child.on("close", (exitCode) => {
       clearTimeout(timeout);
+      clearTimeout(killTimeout);
       resolve({
         stdout,
         stderr,
@@ -261,12 +268,12 @@ function safeJsonParse(value: string): unknown {
   }
 }
 
-function appendCapped(existing: string, chunk: string, maxBytes: number): string {
-  if (existing.length >= maxBytes) {
+function appendCapped(existing: string, chunk: string, maxChars: number): string {
+  if (existing.length >= maxChars) {
     return existing;
   }
   const next = existing + chunk;
-  return next.length <= maxBytes ? next : next.slice(0, maxBytes);
+  return next.length <= maxChars ? next : next.slice(0, maxChars);
 }
 
 function readSpan(rawAlert: Record<string, unknown>): [number, number] | undefined {

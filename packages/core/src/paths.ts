@@ -6,6 +6,7 @@ export type VoicePaths = {
   valeConfigPath: string;
   profilePath: string;
   stylesPath: string;
+  voiceRulesDir: string;
   samplesDir: string;
   proposalsDir: string;
   acceptVocabularyPath: string;
@@ -73,28 +74,17 @@ function findVoiceRepoRoot(startPath: string): string | null {
 }
 
 export function getVoicePaths(repoRoot = resolveRepoRoot()): VoicePaths {
+  const stylesPath = path.join(repoRoot, "styles");
+  const vocabularyDir = path.join(stylesPath, "config", "vocabularies", "voice");
   return {
     repoRoot,
     valeConfigPath: path.join(repoRoot, ".vale.ini"),
     profilePath: path.join(repoRoot, "voice", "profile.yml"),
-    stylesPath: path.join(repoRoot, "styles"),
+    stylesPath,
+    voiceRulesDir: path.join(stylesPath, "voice"),
     samplesDir: path.join(repoRoot, "voice", "samples"),
     proposalsDir: path.join(repoRoot, "voice", "proposals"),
-    acceptVocabularyPath: path.join(
-      repoRoot,
-      "styles",
-      "config",
-      "vocabularies",
-      "Voice",
-      "accept.txt"
-    ),
-    rejectVocabularyPath: path.join(
-      repoRoot,
-      "styles",
-      "config",
-      "vocabularies",
-      "Voice",
-      "reject.txt"
-    )
+    acceptVocabularyPath: path.join(vocabularyDir, "accept.txt"),
+    rejectVocabularyPath: path.join(vocabularyDir, "reject.txt")
   };
 }

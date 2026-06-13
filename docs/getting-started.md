@@ -9,18 +9,18 @@ This guide takes you from a fresh checkout to a working revision packet. The cur
 
 ## Requirements
 
-| Requirement | Version | Why it matters |
-| --- | --- | --- |
-| Node.js | `>=22.0.0` | The CLI, MCP server, package scripts, and MCPB build scripts run on Node. |
-| pnpm | `>=11.0.0` | The workspace and lockfile are managed with pnpm. |
-| Git | Any current version | Voice samples and proposals are ordinary files, so version control is the review surface. |
+| Requirement | Version             | Why it matters                                                                            |
+| ----------- | ------------------- | ----------------------------------------------------------------------------------------- |
+| Node.js     | `>=22.0.0`          | The CLI, MCP server, package scripts, and MCPB build scripts run on Node.                 |
+| pnpm        | `>=11.0.0`          | The workspace and lockfile are managed with pnpm.                                         |
+| Git         | Any current version | Voice samples and proposals are ordinary files, so version control is the review surface. |
 
 Vale is installed through the `@vvago/vale` package. You do not need a separate global Vale install for the normal Wetzler workflow.
 
 ## Install the Checkout
 
 ```bash
-git clone https://github.com/jamesleebaker/wetzler.git
+git clone https://github.com/glorioustephan/wetzler.git
 cd wetzler
 pnpm install
 pnpm build

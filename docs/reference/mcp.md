@@ -94,7 +94,7 @@ Use this when an agent needs to inspect the durable voice directly.
 Returns JSON containing:
 
 - `.vale.ini`,
-- every `.yml` rule under `styles/Voice/`.
+- every `.yml` rule under `styles/voice/`.
 
 Use this when an agent needs to explain or audit the mechanical lint rules.
 

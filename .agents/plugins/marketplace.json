@@ -8,7 +8,7 @@
       "name": "wetzler",
       "source": {
         "source": "local",
-        "path": "./plugins/codex/writing-voice"
+        "path": "./plugins/codex/wetzler"
       },
       "policy": {
         "installation": "AVAILABLE",

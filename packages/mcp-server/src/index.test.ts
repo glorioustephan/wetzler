@@ -1,18 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { toTextResult, toToolResult } from "./index.js";
-
-describe("toTextResult", () => {
-  it("formats MCP text content as pretty JSON", () => {
-    expect(toTextResult({ ok: true })).toEqual({
-      content: [
-        {
-          type: "text",
-          text: "{\n  \"ok\": true\n}"
-        }
-      ]
-    });
-  });
-});
+import { safeToolResult, toToolResult } from "./index.js";
 
 describe("toToolResult", () => {
   it("returns structured content and marks tool execution errors", () => {
@@ -31,6 +18,26 @@ describe("toToolResult", () => {
         error: "Vale failed"
       },
       isError: true
+    });
+  });
+});
+
+describe("safeToolResult", () => {
+  it("passes successful results through unchanged", async () => {
+    const result = toToolResult({ ok: true });
+    await expect(safeToolResult(async () => result)).resolves.toBe(result);
+  });
+
+  it("converts thrown errors into structured error results", async () => {
+    const result = await safeToolResult(async () => {
+      throw new Error("proposal not found");
+    });
+
+    expect(result.isError).toBe(true);
+    expect(result.structuredContent).toEqual({
+      ok: false,
+      data: null,
+      error: "proposal not found"
     });
   });
 });

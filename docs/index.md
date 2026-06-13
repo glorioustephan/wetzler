@@ -59,8 +59,8 @@ Use it when you want to:
 | Piece | What it does |
 | --- | --- |
 | `voice/profile.yml` | The durable voice contract: principles, tone boundaries, allowed moves, banned moves, and rewrite rubric. |
-| `styles/Voice/` | Vale rules that catch specific writing patterns. |
-| `styles/config/vocabularies/Voice/` | Accepted and rejected words for the Vale vocabulary. |
+| `styles/voice/` | Vale rules that catch specific writing patterns. |
+| `styles/config/vocabularies/voice/` | Accepted and rejected words for the Vale vocabulary. |
 | `wetzler lint` | Runs the pinned Vale rules against Markdown. |
 | `wetzler prepare` | Builds the packet an agent uses to revise safely. |
 | `wetzler samples add` | Copies a writing sample into the voice library with metadata. |

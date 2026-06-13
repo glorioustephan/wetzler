@@ -49,6 +49,7 @@ wetzler lint /path/to/draft.md --repo-root /path/to/wetzler
 wetzler prepare draft.md --audience "engineering manager" --goal "fit the configured voice"
 wetzler samples add samples/post.md --label "blog post" --weight 2
 wetzler learn propose --samples "voice/samples/*.md"
+wetzler learn validate <proposal-id>
 wetzler learn accept <proposal-id>
 wetzler mcp
 ```
@@ -61,8 +62,8 @@ Lint findings are still returned as normal results so agents can revise against 
 - `voice/profile.yml` is the durable voice contract.
 - `voice/samples/` stores writing samples and sample metadata.
 - `voice/proposals/` stores review-gated voice update proposals.
-- `styles/Voice/` stores Vale rules.
-- `styles/config/vocabularies/Voice/` stores accepted and rejected terms.
+- `styles/voice/` stores Vale rules.
+- `styles/config/vocabularies/voice/` stores accepted and rejected terms.
 - `packages/core/` exposes the public TypeScript API.
 - `packages/cli/` exposes the `wetzler` command.
 - `packages/mcp-server/` exposes the MCP server used by plugins.
@@ -88,9 +89,10 @@ By default, the agent should return revised Markdown without writing files unles
 The proposal includes deterministic observations from the selected samples and candidate profile
 changes. Edit the proposal before accepting if the suggested change does not match the evidence.
 
-`wetzler learn accept <proposal-id>` validates the proposal in a temporary Vale repo before
-applying it. The MCP server can create and validate proposals, but applying proposals is intentionally
-CLI-only so a human remains in the loop for changes to the durable voice contract.
+`wetzler learn validate <proposal-id>` checks a proposal in a temporary Vale repo without applying
+it, and `wetzler learn accept <proposal-id>` runs the same validation before applying. The MCP server
+can create and validate proposals, but applying proposals is intentionally CLI-only so a human remains
+in the loop for changes to the durable voice contract.
 
 ## Distribution
 

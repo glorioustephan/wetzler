@@ -12,9 +12,9 @@ import os from "node:os";
 import path from "node:path";
 import fg from "fast-glob";
 import { parse, stringify } from "yaml";
+import { slugify, timestampId } from "./ids.js";
 import { getVoicePaths, resolveRepoRoot } from "./paths.js";
 import { loadVoiceProfile } from "./profile.js";
-import { slugify } from "./samples.js";
 import { voiceUpdateProposalSchema } from "./schemas.js";
 import { lintMarkdown } from "./vale.js";
 import type {
@@ -48,11 +48,6 @@ type PlannedWrite = {
 type PreparedWrite = PlannedWrite & {
   tempPath: string;
   previousContents: string | null;
-};
-
-type ParsedProposal = {
-  proposal: VoiceUpdateProposal;
-  proposalPath: string;
 };
 
 export type CreateProposalInput = {
@@ -105,7 +100,7 @@ export async function acceptVoiceUpdateProposal(
   repoRoot = resolveRepoRoot(),
 ): Promise<VoiceUpdateProposal> {
   const paths = getVoicePaths(repoRoot);
-  const { proposal } = await readProposal(paths.proposalsDir, proposalId);
+  const proposal = await readProposal(paths.proposalsDir, proposalId);
   if (proposal.status === "accepted") {
     return proposal;
   }
@@ -147,8 +142,7 @@ export async function acceptVoiceUpdateProposal(
     },
     ...proposal.changes.rules.map((rule) => ({
       filePath: path.join(
-        paths.stylesPath,
-        "Voice",
+        paths.voiceRulesDir,
         safeValeRuleFilename(rule.filename),
       ),
       contents: rule.contents,
@@ -166,7 +160,7 @@ export async function validateVoiceUpdateProposal(
   repoRoot = resolveRepoRoot(),
 ): Promise<VoiceUpdateValidation> {
   const paths = getVoicePaths(repoRoot);
-  const { proposal } = await readProposal(paths.proposalsDir, proposalId);
+  const proposal = await readProposal(paths.proposalsDir, proposalId);
   const errors: string[] = [];
   const warnings: string[] = [];
 
@@ -353,12 +347,12 @@ async function mergeVocabularyFile(
 }
 
 async function writeValeRules(
-  stylesPath: string,
+  rulesDir: string,
   rules: ValeRuleProposal[],
 ): Promise<void> {
   for (const rule of rules) {
     await writeFile(
-      path.join(stylesPath, "Voice", safeValeRuleFilename(rule.filename)),
+      path.join(rulesDir, safeValeRuleFilename(rule.filename)),
       rule.contents,
       "utf8",
     );
@@ -379,16 +373,13 @@ async function writeProposal(
 async function readProposal(
   proposalsDir: string,
   proposalId: string,
-): Promise<ParsedProposal> {
+): Promise<VoiceUpdateProposal> {
   if (!/^[A-Za-z0-9._-]+$/.test(proposalId)) {
     throw new Error(`Unsafe proposal id: ${proposalId}`);
   }
   const proposalPath = path.join(proposalsDir, `${proposalId}.yml`);
   const parsed: unknown = parse(await readFile(proposalPath, "utf8"));
-  return {
-    proposal: voiceUpdateProposalSchema.parse(parsed),
-    proposalPath,
-  };
+  return voiceUpdateProposalSchema.parse(parsed);
 }
 
 function validateRuleShape(rule: ValeRuleProposal, errors: string[]): void {
@@ -448,7 +439,10 @@ async function createValidationRepo(
     stringify(applyProfileChanges(profile, proposal.changes.profile)),
     "utf8",
   );
-  await writeValeRules(path.join(tempRoot, "styles"), proposal.changes.rules);
+  await writeValeRules(
+    path.join(tempRoot, "styles", "voice"),
+    proposal.changes.rules,
+  );
   return tempRoot;
 }
 
@@ -544,11 +538,4 @@ function emptyVocabularyChanges(): VocabularyProposalChanges {
     accept: [],
     reject: [],
   };
-}
-
-function timestampId(): string {
-  return new Date()
-    .toISOString()
-    .replace(/[-:]/g, "")
-    .replace(/\.\d{3}Z$/, "Z");
 }

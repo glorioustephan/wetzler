@@ -9,6 +9,7 @@ import {
   lintMarkdown,
   prepareRevision,
   resolveRepoRootForPath,
+  validateVoiceUpdateProposal,
 } from "@wetzler/core";
 import { startMcpServer } from "@wetzler/mcp-server";
 import type { CreateProposalInput, RevisionRequest } from "@wetzler/core";
@@ -52,12 +53,7 @@ program
     parsePositiveNumber,
   )
   .action(async (target: string | undefined, options: LintOptions) => {
-    const filePath = options.stdin
-      ? (options.path ?? "draft.md")
-      : requireTarget(target, "lint");
-    const repoRoot =
-      options.repoRoot ??
-      (options.stdin ? undefined : resolveRepoRootForPath(filePath));
+    const { filePath, repoRoot } = resolveSource(target, options, "lint");
     const lintInput: Parameters<typeof lintMarkdown>[0] = {
       filePath,
     };
@@ -114,12 +110,11 @@ program
     parsePositiveNumber,
   )
   .action(async (target: string | undefined, options: PrepareOptions) => {
-    const sourcePath = options.stdin
-      ? (options.path ?? "draft.md")
-      : requireTarget(target, "prepare");
-    const repoRoot =
-      options.repoRoot ??
-      (options.stdin ? undefined : resolveRepoRootForPath(sourcePath));
+    const { filePath: sourcePath, repoRoot } = resolveSource(
+      target,
+      options,
+      "prepare",
+    );
     const markdown = options.stdin
       ? await readStdin()
       : await readFile(sourcePath, "utf8");
@@ -200,6 +195,21 @@ learn
   );
 
 learn
+  .command("validate")
+  .argument("<proposal-id>", "Proposal id from voice/proposals")
+  .option("--repo-root <path>", "Writing Voice repository root")
+  .action(async (proposalId: string, options: { repoRoot?: string }) => {
+    const validation = await validateVoiceUpdateProposal(
+      proposalId,
+      options.repoRoot,
+    );
+    printJson(validation);
+    if (!validation.ok) {
+      process.exitCode = 1;
+    }
+  });
+
+learn
   .command("accept")
   .argument("<proposal-id>", "Proposal id from voice/proposals")
   .option("--repo-root <path>", "Writing Voice repository root")
@@ -243,6 +253,20 @@ function requireTarget(
     );
   }
   return target;
+}
+
+function resolveSource(
+  target: string | undefined,
+  options: { stdin?: boolean; path?: string; repoRoot?: string },
+  commandName: string,
+): { filePath: string; repoRoot: string | undefined } {
+  const filePath = options.stdin
+    ? (options.path ?? "draft.md")
+    : requireTarget(target, commandName);
+  const repoRoot =
+    options.repoRoot ??
+    (options.stdin ? undefined : resolveRepoRootForPath(filePath));
+  return { filePath, repoRoot };
 }
 
 function printJson(value: unknown): void {

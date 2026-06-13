@@ -8,7 +8,7 @@ import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
 const repoRoot = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
-const pluginRoot = path.join(repoRoot, "plugins", "codex", "writing-voice");
+const pluginRoot = path.join(repoRoot, "plugins", "codex", "wetzler");
 const marketplacePath = path.join(
   repoRoot,
   ".agents",

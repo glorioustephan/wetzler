@@ -62,10 +62,10 @@ export default defineConfig({
       provider: "local",
     },
     socialLinks: [
-      { icon: "github", link: "https://github.com/jamesleebaker/wetzler" },
+      { icon: "github", link: "https://github.com/glorioustephan/wetzler" },
     ],
     editLink: {
-      pattern: "https://github.com/jamesleebaker/wetzler/edit/main/docs/:path",
+      pattern: "https://github.com/glorioustephan/wetzler/edit/main/docs/:path",
       text: "Edit this page on GitHub",
     },
     footer: {

@@ -10,7 +10,7 @@ Wetzler can be used in several ways. Start with the source checkout, then choose
 ## Install From Source
 
 ```bash
-git clone https://github.com/jamesleebaker/wetzler.git
+git clone https://github.com/glorioustephan/wetzler.git
 cd wetzler
 pnpm install
 pnpm build
@@ -34,7 +34,7 @@ alias wetzler="node /path/to/wetzler/packages/cli/dist/index.js"
 The repository includes a repo-local Codex plugin at:
 
 ```text
-plugins/codex/writing-voice
+plugins/codex/wetzler
 ```
 
 The local marketplace entry is:
@@ -46,7 +46,7 @@ The local marketplace entry is:
 The Codex plugin starts the MCP server through:
 
 ```text
-plugins/codex/writing-voice/scripts/start-mcp.mjs
+plugins/codex/wetzler/scripts/start-mcp.mjs
 ```
 
 That launcher sets `WRITING_VOICE_ROOT` to the repository root and runs:
@@ -74,7 +74,7 @@ Use the `rewrite-in-voice` skill when you want the agent to prepare a revision p
 The repository also includes a Claude Code wrapper at:
 
 ```text
-plugins/claude-code/writing-voice
+plugins/claude-code/wetzler
 ```
 
 It uses the same local MCP launcher pattern as the Codex plugin:
@@ -129,10 +129,10 @@ The server communicates over stdio, which is what most local MCP clients expect.
 
 Use these checks after setup:
 
-| Check | Command | Expected result |
-| --- | --- | --- |
-| Build | `pnpm build` | All workspace packages compile. |
-| Tests | `pnpm test` | Vitest suites pass. |
-| CLI | `pnpm wetzler lint README.md --json` | JSON result with alerts or an empty alert list. |
-| MCPB | `pnpm validate:mcpb` | Bundle builds, validates, and smoke-tests initialization. |
-| Codex plugin | `pnpm validate:codex-plugin` | Plugin manifest and launcher validate. |
+| Check        | Command                              | Expected result                                           |
+| ------------ | ------------------------------------ | --------------------------------------------------------- |
+| Build        | `pnpm build`                         | All workspace packages compile.                           |
+| Tests        | `pnpm test`                          | Vitest suites pass.                                       |
+| CLI          | `pnpm wetzler lint README.md --json` | JSON result with alerts or an empty alert list.           |
+| MCPB         | `pnpm validate:mcpb`                 | Bundle builds, validates, and smoke-tests initialization. |
+| Codex plugin | `pnpm validate:codex-plugin`         | Plugin manifest and launcher validate.                    |

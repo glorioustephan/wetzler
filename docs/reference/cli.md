@@ -124,6 +124,28 @@ pnpm wetzler learn propose \
   --rationale "Capture the accepted product announcement voice"
 ```
 
+## `wetzler learn validate`
+
+Validate a proposal without applying it.
+
+```bash
+pnpm wetzler learn validate <proposal-id> [options]
+```
+
+Options:
+
+| Option | Description |
+| --- | --- |
+| `--repo-root <path>` | Explicit Wetzler voice repository root. |
+
+Example:
+
+```bash
+pnpm wetzler learn validate 20260611T120000Z-product-announcement
+```
+
+The command prints the validation result as JSON and exits non-zero when validation fails.
+
 ## `wetzler learn accept`
 
 Validate and apply a proposal.
