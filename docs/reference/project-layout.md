@@ -20,6 +20,7 @@ wetzler/
   plugins/
     claude-code/
     codex/
+  samples/
   scripts/
   styles/
   voice/
@@ -32,6 +33,7 @@ wetzler/
 | `README.md` | Short project overview and command list. |
 | `docs/` | VitePress documentation site. |
 | `cover-image-optimized.png` | Cover image used by README and docs. |
+| `samples/` | Example source samples that can be imported with `wetzler samples add`. |
 | `voice/profile.yml` | Durable voice profile. |
 | `voice/samples/` | Stored voice samples. |
 | `voice/proposals/` | Voice update proposals. |

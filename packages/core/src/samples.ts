@@ -26,9 +26,9 @@ export async function addVoiceSample(input: AddSampleInput): Promise<VoiceSample
     id,
     label: input.label,
     weight: input.weight,
-    sourcePath,
-    samplePath,
-    metadataPath,
+    sourcePath: toPortableRepoPath(sourcePath, repoRoot),
+    samplePath: toPortableRepoPath(samplePath, repoRoot),
+    metadataPath: toPortableRepoPath(metadataPath, repoRoot),
     addedAt: new Date().toISOString()
   };
 
@@ -37,4 +37,16 @@ export async function addVoiceSample(input: AddSampleInput): Promise<VoiceSample
   await writeFile(metadataPath, stringify(sample), "utf8");
 
   return sample;
+}
+
+function toPortableRepoPath(filePath: string, repoRoot: string): string {
+  const relativePath = path.relative(repoRoot, filePath);
+  if (
+    relativePath &&
+    !relativePath.startsWith("..") &&
+    !path.isAbsolute(relativePath)
+  ) {
+    return relativePath.split(path.sep).join("/");
+  }
+  return filePath;
 }

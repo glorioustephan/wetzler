@@ -70,7 +70,7 @@ export default defineConfig({
     },
     footer: {
       message: "AI-assisted writing, grounded in inspectable rules.",
-      copyright: "Copyright © 2026 James Baker",
+      copyright: "Copyright © 2026 Wetzler contributors",
     },
   },
 });

@@ -124,6 +124,8 @@ pnpm wetzler learn propose \
   --rationale "Capture the accepted product announcement voice"
 ```
 
+The command exits non-zero when the sample globs do not match any files.
+
 ## `wetzler learn validate`
 
 Validate a proposal without applying it.

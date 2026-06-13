@@ -28,6 +28,12 @@ describe("voice learning proposals", () => {
       repoRoot,
     });
     expect(sample.label).toBe("Launch note");
+    expect(sample.sourcePath).toBe("incoming.md");
+    expect(sample.samplePath).toMatch(/^voice\/samples\/.+-launch-note\.md$/);
+    expect(sample.metadataPath).toMatch(
+      /^voice\/samples\/.+-launch-note\.yml$/,
+    );
+    expect(path.isAbsolute(sample.samplePath)).toBe(false);
 
     const proposal = await createVoiceUpdateProposal({
       sampleGlobs: ["voice/samples/*.md"],
@@ -126,6 +132,18 @@ describe("voice learning proposals", () => {
     await expect(
       acceptVoiceUpdateProposal(proposal.id, repoRoot),
     ).rejects.toThrow("failed validation");
+  });
+
+  it("fails proposal creation when sample globs match nothing", async () => {
+    const repoRoot = await createTempVoiceRepo();
+
+    await expect(
+      createVoiceUpdateProposal({
+        sampleGlobs: ["voice/samples/missing-*.md"],
+        rationale: "missing samples",
+        repoRoot,
+      }),
+    ).rejects.toThrow("No samples matched");
   });
 });
 

@@ -88,6 +88,7 @@ The proposal records:
 - optional Vale rule changes.
 
 The generated proposal is intentionally conservative. It gives you a safe starting point, not an automatic personality transplant.
+If the sample glob matches nothing, Wetzler stops instead of creating an empty proposal.
 
 ## Review the Proposal
 

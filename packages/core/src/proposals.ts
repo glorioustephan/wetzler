@@ -68,6 +68,11 @@ export async function createVoiceUpdateProposal(
     absolute: true,
     onlyFiles: true,
   });
+  if (sources.length === 0) {
+    throw new Error(
+      `No samples matched: ${input.sampleGlobs.join(", ")}. Add samples first or check the glob path.`,
+    );
+  }
   const [profile, sampleMetrics] = await Promise.all([
     loadVoiceProfile(repoRoot),
     analyzeSamples(sources),

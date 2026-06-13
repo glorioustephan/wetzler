@@ -60,6 +60,7 @@ Lint findings are still returned as normal results so agents can revise against 
 ## Repository Layout
 
 - `voice/profile.yml` is the durable voice contract.
+- `samples/` stores example source samples you can import or inspect.
 - `voice/samples/` stores writing samples and sample metadata.
 - `voice/proposals/` stores review-gated voice update proposals.
 - `styles/voice/` stores Vale rules.
